@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body th:object="${photo}">
+    <h1>[[*{title}]]</h1>
+    <img th:src="@{*{url}}" alt="">
+    <p>[[*{description}]]</p>
+    <span>[[*{tag}]]</span>
+    <ul
+	          th:value="@{/photo/admin/{id} (id=*{id})}"
+	     	 th:field="${photo.categories}"
+	>
+         <li 
+         th:each="category : ${photo.categories}"
+		 th:object="${category}"
+	     		>
+	     			[[*{name}]]
+         </li>
+    </ul>
+
+</body>
+</html>

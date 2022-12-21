@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+    <h1>Photo CREATE</h1>
+    <div
+		th:if="${errors}"
+	>
+		ERROR:<br>
+		<ul>
+			<li
+				th:each="error : ${errors}"
+				th:object="${error}"
+			>
+				[[*{defaultMessage}]]
+			</li>
+		</ul>
+	</div>
+	<form 
+		method="POST" 
+		action="/photo/admin/update"
+		th:object="${photo}" >
+	
+		<input type="number" name="id" th:field="*{id}" style="display:none">
+		<label>title</label>
+		<input type="text" name="title" th:field="*{title}">
+		<br>
+		<label>Description</label>
+		<input type="text" name="description" th:field="*{description}">
+		<br>
+        <label>Url</label>
+		<input type="text" name="url" th:field="*{url}">
+		<br>
+		<label>Tag</label>
+		<input type="text" name="tag" th:field="*{tag}">
+		<br>
+		<div
+			th:each="category : ${categories}"
+			th:object="${category}"
+		>
+			<input
+				type="checkbox"
+				name="category"
+				
+				th:value="*{id}"
+				th:field="${photo.categories}"
+			>
+			<label>
+				[[*{name}]]
+			</label>
+		</div>
+		<div>
+	        <label>Visible</label>
+	        <br>
+			<input
+				type="checkbox"
+				name="visible"
+				th:field="*{visible}"
+				checked="checked"
+			>
+		</div>
+		<br>
+		<input type="submit" value="UPDATE">
+	
+	</form>
+
+</body>
+</html>
