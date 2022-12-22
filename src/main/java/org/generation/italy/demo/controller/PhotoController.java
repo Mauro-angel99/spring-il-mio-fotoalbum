@@ -2,6 +2,7 @@ package org.generation.italy.demo.controller;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.generation.italy.demo.pojo.Category;
 import org.generation.italy.demo.pojo.Photo;
 import org.generation.italy.demo.serv.CategoryService;
@@ -21,8 +22,8 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/")
-public class MainController {
-
+public class PhotoController {
+	
 	@Autowired
 	private CategoryService categoryService;
 	
@@ -118,7 +119,7 @@ public class MainController {
 		
 		return "photo-update";
 	}
-	@PostMapping("photo/admin/update")
+	@PostMapping("photo/admin/update/{id}")
 	public String updatePhoto(@Valid Photo photo, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
             if (bindingResult.hasErrors()) {
@@ -168,86 +169,5 @@ public class MainController {
 		
 		return "photo-search";
 	}
-	
-	//--------------------------------------------------------------------------------------
-	
-		@GetMapping("/category")
-		public String getCategory(Model model) {
-			
-			List<Category> category = categoryService.findAll();
-			model.addAttribute("category", category);
-			
-			return "categories";
-		}
-		@GetMapping("/category/admin/create")
-		public String createCategory(Model model) {
-			
-			Category category = new Category();
-			model.addAttribute("category", category);
-			
-			List<Photo> photos = photoService.findAll();
-			model.addAttribute("photos", photos);
-			
-			return "category-create";
-		}
-		@PostMapping("/category/admin/create")
-		public String storeCategory(@Valid Category category) {
-			
-			for (Photo p : category.getPhotos()) {
-				
-				p.getCategories().add(category);
-			}
-			
-			categoryService.save(category);
-			
-			return "redirect:/category";
-		}
-		
-		@GetMapping("/category/admin/update/{id}")
-		public String updateCategory(
-				@PathVariable("id") int id,
-				Model model
-			) {
-			
-			Category category = categoryService.findCategoryById(id);
-			model.addAttribute("category", category);
-			
-			List<Photo> photo = photoService.findAll();
-			model.addAttribute("photo", photo);
-			
-			return "category-update";
-		}
-		@PostMapping("/category/admin/update/")
-		public String editCategory(
-				@PathVariable("id") int id,
-				@Valid Category category
-			) {
-			
-			Category oldC = categoryService.findCategoryById(id);
-			
-			for (Photo p : oldC.getPhotos()) {
-				
-				p.getCategories().remove(oldC);
-			}
-			
-			for (Photo p : category.getPhotos()) {
-				
-				p.addCategory(category);
-			}
-			
-			categoryService.save(category);
-			
-			return "redirect:/category";
-		}
-		
-		@GetMapping("/category/delete/{id}")
-		public String deleteCategory(@PathVariable("id") int id) {
-			
-			Optional<Category> optCategory = Optional.ofNullable(categoryService.findCategoryById(id));
-			Category category = optCategory.get();
-			
-			categoryService.delete(category);
-			
-			return "redirect:/category";
-		}
+
 }

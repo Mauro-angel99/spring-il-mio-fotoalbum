@@ -7,7 +7,10 @@
 <body th:object="${photo}">
     <h1>[[*{title}]]</h1>
     <img th:src="@{*{url}}" alt="">
-    <p>[[*{description}]]</p>
+    <p>[[*{description}]]</p> 
+    <span th:if="${photo.isVisible}">Visible</span>
+    <span th:else>Not visible</span>
+    <br>
     <span>[[*{tag}]]</span>
     <ul
 	          th:value="@{/photo/admin/{id} (id=*{id})}"

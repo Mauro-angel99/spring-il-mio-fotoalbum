@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Categories:</h1>
+	<a href="/photo/admin/search"><h2>Album</h2></a>
+	<a
+		href="/category/admin/create"
+	>
+		CREATE NEW CATEGORY
+	</a>
+	<ul>
+		<li
+			th:each="category : ${categories}"
+			th:object="${category}"
+		>
+			[[*{name}]]
+			<ul>
+				<li
+					th:each="photo : *{photos}"
+					th:object="${photo}"
+				>
+					[[*{title}]]
+				</li>
+			</ul>
+			<a
+				th:href="@{/category/admin/update/{id} (id=*{id})}"
+			>
+			    UPDATE
+			</a>
+			<a
+				th:href="@{/category/admin/delete/{id} (id=*{id})}"
+			>
+				DELETE
+			</a>
+		</li>
+	</ul>
+</body>
+</html>

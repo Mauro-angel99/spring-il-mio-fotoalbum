@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body
+	th:object="${category}"
+>
+	<h1>UPDATE CATEGORY:</h1>
+	<form
+		method="POST"
+		th:action="@{/category/admin/update/{id} (id=*{id})}"
+	>
+		<label>Name:</label>
+		<input type="text" name="name" th:value="*{id}" th:field="*{name}">
+		<br>
+		<div
+			th:each="photo : ${photos}"
+			th:object="${photo}"
+		>
+			<input
+				type="checkbox"
+				name="photos"
+				
+				th:value="*{id}"
+				th:field="${category.photos}"
+			>
+			<label>
+				[[*{title}]]
+			</label>
+		</div>
+		<br><br>
+		<input type="submit" value="UPDATE">
+	</form>
+</body>
+</html>

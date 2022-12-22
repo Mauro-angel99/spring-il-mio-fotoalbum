@@ -21,7 +21,7 @@
 	</div>
 	<form 
 		method="POST" 
-		action="/photo/admin/update"
+		action="/photo/admin/update/{id}"
 		th:object="${photo}" >
 	
 		<input type="number" name="id" th:field="*{id}" style="display:none">
